@@ -1,6 +1,7 @@
 import extend from 'extend'
 import Log from 'gcloud/lib/logging/log'
 import gcloud from 'gcloud'
+import promisify from 'es6-promisify'
 
 class BulkLogger {
   constructor (projectId, keyFilename) {
@@ -16,6 +17,8 @@ class BulkLogger {
       projectId: projectId,
       keyFilename: keyFilename
     }).logging()
+    this.logger = this.logging.log('unknown')
+    this.write = promisify(this.logger.write, this.logger)
   }
 
   entry (log, metadata, data, pKey, sKey) {
