@@ -7,7 +7,8 @@ import BulkLogger from '../lib'
 describe('BulkLogger', () => {
   it('formats entries', () => {
     const projectId = 'project-id'
-    const keyfile = 'keyfile.json'
+    const clientEmail = 'service-user@project-id.iam.gserviceaccount.com'
+    const privateKey = 'fakeKey'
     const logName = 'app-name-log'
     const app = 'app-name'
     const process = 'process'
@@ -28,7 +29,7 @@ describe('BulkLogger', () => {
       textPayload: 'this is log text'
     }
 
-    const logger = new BulkLogger(projectId, keyfile)
+    const logger = new BulkLogger(projectId, clientEmail, privateKey)
     const entry = logger.entry(logName, metadata, logLine, app, process)
 
     expect(entry.toJSON()).to.eql(expected)

@@ -4,9 +4,8 @@ import gcloud from 'gcloud'
 import promisify from 'es6-promisify'
 
 class BulkLogger {
-  constructor (projectId, keyFilename) {
+  constructor (projectId, clientEmail, privateKey) {
     this.projectId = projectId
-    this.keyFilename = keyFilename
     this.resource = {
       type: 'global',
       labels: {
@@ -15,7 +14,10 @@ class BulkLogger {
     }
     this.logging = gcloud({
       projectId: projectId,
-      keyFilename: keyFilename
+      credentials: {
+        client_email: clientEmail,
+        private_key: privateKey,
+      }
     }).logging()
     this.logger = this.logging.log('unknown')
     this.write = promisify(this.logger.write, this.logger)
