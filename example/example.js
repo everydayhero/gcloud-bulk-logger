@@ -1,4 +1,4 @@
-import BulkLogger from '.'
+import BulkLogger from '..'
 
 const keyfile = require('../keyfile.json')
 const logger = new BulkLogger('edh-logging-test', keyfile.client_email, keyfile.private_key)
